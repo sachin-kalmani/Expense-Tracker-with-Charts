@@ -1,15 +1,3 @@
-
--- this checks for the database if it exists or not if it is not then the database gets created
-create database if not exists expense_tracker_with_charts;
-
-
-
--- this is for using the current desired database
-use expense_tracker_with_charts; 
-
-
-
-
 -- The Users table with userid as primary key holds the userinformation
 CREATE TABLE if not exists USERS(
 	USER_ID INT NOT NULL AUTO_INCREMENT,
@@ -23,108 +11,47 @@ CREATE TABLE if not exists USERS(
 	PRIMARY KEY(USER_ID)
     );
     
-    
-
-
 -- Expense table where all the information about expense is added user_id is used as foreign key to this table 
 CREATE TABLE IF NOT EXISTS EXPENSE(
-		EXPENSE_ID BIGINT NOT NULL auto_increment,
+		EXPENSE_ID INT NOT NULL auto_increment,
         USER_ID INT NOT NULL,
-        AMOUNT FLOAT NOT NULL,
-        CATEGORY VARCHAR(100) NOT NULL,
+        AMOUNT DECIMAL(10,3) NOT NULL,
+        CATEGORY_ID INT NOT NULL,
         EXPENSE_DESCRIPTION text,
 		EXPENSE_RECORDTIME TIMESTAMP DEFAULT current_timestamp,
         PRIMARY KEY (EXPENSE_ID),
-        FOREIGN KEY (USER_ID) references USERS(USER_ID) ON DELETE cascade);
-
-
-
+        FOREIGN KEY (USER_ID) references USERS(USER_ID) ON DELETE cascade,
+        FOREIGN KEY (CATEGORY_ID) references CATEGORY(CATEGORY_ID) ON DELETE cascade
+        );
 
 -- Category table:- It list downs the categories based on the type income and expense
-CREATE TABLE IF NOT EXISTS CATEGORY(
-		CATEGORY_ID INT NOT NULL AUTO_INCREMENT,
-		CATEGORY_NAME VARCHAR(100) NOT NULL,
-        CATEGORY_TYPE ENUM('Income','Expense') NOT NULL, -- Differentiate the income and expense category
-        CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY(CATEGORY_ID));
+CREATE TABLE IF NOT EXISTS CATEGORY (
+    CATEGORY_ID INT NOT NULL AUTO_INCREMENT,
+    CATEGORY_NAME VARCHAR(100) NOT NULL,
+    USER_ID INT NULL, -- Null for predefined categories, set for user-defined ones
+    PRIMARY KEY (CATEGORY_ID),
+    FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID) ON DELETE CASCADE
+);
+
+-- select firstname,lastname,category_name from users u join category c on u.user_id = c.user_id where c.user_id=1;
 
 
+CREATE TABLE IF NOT EXISTS SPRING_SESSION (
+    PRIMARY_ID CHAR(36) NOT NULL,
+    SESSION_ID CHAR(36) NOT NULL,
+    CREATION_TIME BIGINT NOT NULL,
+    LAST_ACCESS_TIME BIGINT NOT NULL,
+    MAX_INACTIVE_INTERVAL INT NOT NULL,
+    EXPIRY_TIME BIGINT NOT NULL,
+    PRINCIPAL_NAME VARCHAR(100),
+    CONSTRAINT SPRING_SESSION_PK PRIMARY KEY (PRIMARY_ID)
+) ENGINE=InnoDB;
 
--- alter the expense table adding the category-id as foreign key
-ALTER TABLE EXPENSE modify COLUMN CATEGORY_ID INT NULL;
-ALTER TABLE EXPENSE ADD CONSTRAINT FK_CATEGORY foreign key (CATEGORY_ID) references CATEGORY(CATEGORY_ID) ON DELETE cascade;
+select * from users;
+select * from category;
+select * from expense;
 
-
--- alter the expense table to add the user-category into the table
-ALTER TABLE EXPENSE ADD COLUMN USER_CATEGORY_ID INT NULL;
-ALTER TABLE EXPENSE ADD CONSTRAINT FK_USER_CATEGORY FOREIGN KEY (USER_CATEGORY_ID) references USER_CATEGORY(USER_CATEGORY_ID) ON DELETE SET NULL;
-
-ALTER TABLE EXPENSE 
-ADD CONSTRAINT chk_category_selection 
-CHECK (CATEGORY_ID IS NULL OR USER_CATEGORY_ID IS NULL);
-
-
--- INCOME TABLE TO STORE THE INCOME OF USER SAME AS EXPENSE
-CREATE TABLE IF NOT EXISTS INCOME(
-		INCOME_ID BIGINT NOT NULL auto_increment,
-        USER_ID INT NOT NULL,
-        CATEGORY_ID INT NOT NULL,
-        AMOUNT FLOAT NOT NULL,
-        CATEGORY VARCHAR(100) NOT NULL,
-        INCOME_DESCRIPTION text,
-		INCOME_RECORDTIME TIMESTAMP DEFAULT current_timestamp,
-        PRIMARY KEY (INCOME_ID),
-        FOREIGN KEY (USER_ID) references USERS(USER_ID) ON DELETE cascade,
-        FOREIGN KEY (CATEGORY_ID) references CATEGORY(CATEGORY_ID) ON DELETE CASCADE
-        );
-        
-        
--- alter the expense table adding the category-id as foreign key
-ALTER TABLE INCOME modify COLUMN CATEGORY_ID INT NULL;
-
-
-ALTER TABLE INCOME ADD COLUMN USER_CATEGORY_ID INT NULL;
-ALTER TABLE INCOME ADD CONSTRAINT FK_USER_CATEGORY_INCOME FOREIGN KEY (USER_CATEGORY_ID) references USER_CATEGORY(USER_CATEGORY_ID) ON DELETE SET NULL;
-
-
-
--- INSERTING SOME PREDEFINED CATEGORY INTO THE CATEGORY TABLE
-INSERT ignore into CATEGORY (CATEGORY_NAME, CATEGORY_TYPE) VALUES
-('Salary', 'Income'),
-('Freelance Income', 'Income'),
-('Investment Returns', 'Income'),
-('Business Profits', 'Income'),
-('Rental Income', 'Income'),
-('Gifts', 'Income'),
-('Bonuses', 'Income'),
-('Interest Income', 'Income'),
-('Pension', 'Income'),
-('Scholarships & Grants', 'Income'),
-('Rent/Mortgage', 'Expense'),
-('Groceries', 'Expense'),
-('Transport', 'Expense'),
-('Insurance', 'Expense'),
-('Loan Payments', 'Expense'),
-('Medical Expenses', 'Expense'),
-('Dining Out', 'Expense'),
-('Entertainment', 'Expense'),
-('Shopping', 'Expense'),
-('Gym & Fitness', 'Expense'),
-('Travel', 'Expense'),
-('Hobbies', 'Expense'),
-('Emergency Fund', 'Expense'),
-('Investments', 'Expense');
-
--- user defined category
-CREATE TABLE IF NOT EXISTS USER_CATEGORY(
-		CATEGORY_ID INT NOT NULL AUTO_INCREMENT,
-        USER_ID INT NOT NULL,
-		CATEGORY_NAME VARCHAR(100) NOT NULL,
-        CATEGORY_TYPE ENUM('Income','Expense') NOT NULL, -- Differentiate the income and expense category
-        CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY(CATEGORY_ID),
-        foreign key (USER_ID) references USERS(USER_ID) ON DELETE CASCADE
-        );
-
-
+-- CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX1 ON SPRING_SESSION (EXPIRY_TIME);
+-- CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX2 ON SPRING_SESSION (SESSION_ID);
+-- CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX3 ON SPRING_SESSION (PRINCIPAL_NAME);
         
