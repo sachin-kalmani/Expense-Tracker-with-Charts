@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.Expense.DTO.UserDTO;
 import io.Expense.model.AuthRequest;
 import io.Expense.model.User;
 import io.Expense.model.UserInfoDetails;
@@ -53,6 +54,7 @@ public class UserController {
     @PostMapping("/sign-in")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserRole("ROLE_USER");
         User savedUser = userRepo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }

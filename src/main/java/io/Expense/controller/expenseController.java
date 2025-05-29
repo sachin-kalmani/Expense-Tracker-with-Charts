@@ -3,6 +3,7 @@ package io.Expense.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.Expense.DTO.expenseDTO;
 import io.Expense.model.Category;
 import io.Expense.model.Expense;
 import io.Expense.model.User;
@@ -69,9 +71,15 @@ public class expenseController {
 		    if (response.getStatusCode().is2xxSuccessful()) {
 		        User user = (User) response.getBody();
 
-		        // Fetch all expenses for the user
 		        List<Expense> userExpenses = expenseRepository.findByUser(user);
-		        return ResponseEntity.ok(userExpenses);
+		        List<expenseDTO> dtos = userExpenses.stream()
+                        .map(expenseDTO::new)
+                        .collect(Collectors.toList());
+
+		        		return ResponseEntity.ok(dtos);
+		        // Fetch all expenses for the user
+//		        List<Expense> userExpenses = expenseRepository.findByUser(user);
+//		        return ResponseEntity.ok(userExpenses);
 		    }
 
 		    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token.");

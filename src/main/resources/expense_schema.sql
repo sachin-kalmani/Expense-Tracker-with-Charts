@@ -1,4 +1,6 @@
 -- The Users table with userid as primary key holds the userinformation
+--use expense_tracker_with_charts;
+--select * from users;
 CREATE TABLE if not exists USERS(
 	USER_ID INT NOT NULL AUTO_INCREMENT,
     FIRSTNAME VARCHAR(155) NOT NULL,
@@ -10,7 +12,13 @@ CREATE TABLE if not exists USERS(
     UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY(USER_ID)
     );
-    
+
+--use expense_tracker_with_charts;
+--alter table users add column role varchar(50) not null default 'ROLE_USER';
+--alter table users rename column role to ROLE;
+--select * from users;
+--ALTER TABLE users MODIFY password VARCHAR(255);
+
 -- Expense table where all the information about expense is added user_id is used as foreign key to this table 
 CREATE TABLE IF NOT EXISTS EXPENSE(
 		EXPENSE_ID INT NOT NULL auto_increment,
@@ -47,9 +55,9 @@ CREATE TABLE IF NOT EXISTS SPRING_SESSION (
     CONSTRAINT SPRING_SESSION_PK PRIMARY KEY (PRIMARY_ID)
 ) ENGINE=InnoDB;
 
-select * from users;
-select * from category;
-select * from expense;
+
+--select * from category;
+--select * from expense;
 
 -- CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX1 ON SPRING_SESSION (EXPIRY_TIME);
 -- CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX2 ON SPRING_SESSION (SESSION_ID);

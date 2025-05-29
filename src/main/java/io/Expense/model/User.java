@@ -111,9 +111,9 @@ public class User{
 		return userRole;
 	}
 
-//	public void setUserRole(String userRole) {
-//		this.userRole = userRole;
-//	}
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;

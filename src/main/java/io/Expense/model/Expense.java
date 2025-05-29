@@ -34,8 +34,7 @@ public class Expense {
     @Column(name = "EXPENSE_DESCRIPTION", columnDefinition = "TEXT")
     private String expenseDescription;
 
-    @CreationTimestamp
-    @Column(name = "EXPENSE_RECORDTIME", updatable = false)
+    @Column(name = "EXPENSE_RECORDTIME")
     private LocalDateTime expenseRecordTime;
     
     @Transient
@@ -71,11 +70,23 @@ public class Expense {
 
     public LocalDateTime getExpenseRecordTime() { return expenseRecordTime; }
 
-    public Integer getCategoryId() {
-        return category != null ? category.getId() : null;
-    }
+	public int getCategoryId() {
+		return categoryId;
+	}
 
-    public Integer getUserId() {
-        return user != null ? user.getUserId() : null;
-    }
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public void setExpenseRecordTime(LocalDateTime expenseRecordTime) {
+		this.expenseRecordTime = expenseRecordTime;
+	}
 }
