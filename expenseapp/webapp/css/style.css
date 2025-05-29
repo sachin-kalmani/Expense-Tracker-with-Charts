@@ -1,0 +1,35 @@
+/* Enter your custom styles here */
+.bigSwitch .sapMSwt {
+  transform: scale(1) ;
+  transform-origin: left center;
+}
+.sapMCard{
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  padding: 10px 10px !important;
+}
+.sapMTextHeader{
+  font-size: large;
+  padding: 10px 10px !important;
+}
+.sapMTextBold{
+    /* display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; */
+  font-size: 50px !important;
+  font-weight: bold !important;
+  color: #8f3030;
+}
+.SapMMedium{
+  font-size: 20px !important;
+  color: #51547c;
+}
+.summaryBox{
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
