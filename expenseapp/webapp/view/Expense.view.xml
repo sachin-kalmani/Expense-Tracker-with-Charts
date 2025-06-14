@@ -1,0 +1,88 @@
+<mvc:View
+  controllerName="expenseapp.controller.Expense"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  width="100%">
+
+  <VBox>
+    <Title text="Expense Table" level="H2" />
+ <Table
+  id="expenseTable"
+  items="{/expenses}"
+  inset="false"
+  class="sapUiResponsiveMargin"
+  headerText="All Expenses (0)"
+  width="90%">
+  
+  <columns>
+    <!-- Expense ID -->
+    <Column>
+      <Text text="ID" />
+    </Column>
+
+    <!-- Amount Column -->
+    <Column>
+      <VBox>
+        <Text text="Amount" />
+        <Select change="onAmountSort">
+          <core:Item key="" text="Sort" />
+          <core:Item key="asc" text="Low to High" />
+          <core:Item key="desc" text="High to Low" />
+        </Select>
+      </VBox>
+    </Column>
+
+    <!-- Description Column -->
+    <Column>
+      <VBox>
+        <Text text="Description" />
+        <Input placeholder="Filter by Description" liveChange="onDescriptionFilter" width="100%" />
+      </VBox>
+    </Column>
+
+    <!-- Record Time Column -->
+    <Column>
+      <VBox>
+        <Text text="Date" />
+        <Input placeholder="Filter by Date (YYYY-MM-DD)" liveChange="onDateFilter" width="100%" />
+      </VBox>
+    </Column>
+
+    <!-- Category Column -->
+    <Column>
+      <VBox>
+        <Text text="Category" />
+        <Select id="categoryFilter" change="onCategoryFilter"/>
+      </VBox>
+    </Column>
+
+    <!-- Actions -->
+    <Column hAlign="Center">
+      <Text text="Actions" />
+    </Column>
+  </columns>
+
+  <items>
+    <ColumnListItem>
+      <cells>
+        <Text text="{expenseId}" />
+        <Text text="{amount}" />
+        <Text text="{expenseDescription}" />
+        <Text text="{= ${expenseRecordTime}.split('T')[0] }" />
+        <Text text="{categoryName}" />
+
+        <!-- Action Buttons -->
+        <HBox justifyContent="Center" alignItems="Center">
+          <Button icon="sap-icon://edit" press="onEditPress" tooltip="Edit" />
+          <Button icon="sap-icon://delete" press="onDeletePress" type="Reject" tooltip="Delete" class="sapUiTinyMarginBegin" />
+        </HBox>
+      </cells>
+    </ColumnListItem>
+  </items>
+</Table>
+  </VBox>
+</mvc:View>
+
+
+<!-- headerText="All Expenses ({= ${/expenses}.length })" -->

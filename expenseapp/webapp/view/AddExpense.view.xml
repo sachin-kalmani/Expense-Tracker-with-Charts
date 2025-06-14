@@ -1,0 +1,68 @@
+<mvc:View
+  xmlns:form="sap.ui.layout.form"
+  controllerName="expenseapp.controller.AddExpense"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+>
+  <VBox class="sapUiSmallMargin">
+    <Title text="Add New Expense" level="H2" />
+
+    <form:SimpleForm
+      layout="ResponsiveGridLayout"
+      editable="true"
+      columnsL="2"
+      columnsM="1"
+      labelSpanL="4"
+      labelSpanM="6"
+      class="sapUiSmallMarginTop"
+    >
+
+      <!-- Amount -->
+      <Label text="Amount" labelFor="amountInput" />
+      <Input
+        id="amountInput"
+        type="Number"
+        placeholder="Enter amount"
+        value="{form>/amount}"
+      />
+
+      <!-- Category Dropdown -->
+      <Label text="Category" labelFor="categoryInput" />
+      <Select
+        id="categoryInput"
+        selectedKey="{form>/categoryId}"
+        change=".onCategoryChange"
+        items="{categories>/}"
+      >
+        <core:Item key="{categories>id}" text="{categories>name}" />
+      </Select>
+
+      <!-- Description -->
+      <Label text="Description" labelFor="descInput" />
+      <TextArea
+        id="descInput"
+        value="{form>/expenseDescription}"
+        placeholder="Add description"
+        growing="true"
+        rows="3"
+      />
+      <Label text="Date" labelFor="dateInput" />
+      <DatePicker
+        id="dateInput"
+        value="{form>/expenseRecordTime}"
+        displayFormat="yyyy-MM-dd"
+        valueFormat="yyyy-MM-dd"
+        placeholder="Select date"
+      />
+    </form:SimpleForm>
+
+    <!-- Submit Button -->
+    <Button
+      text="Submit"
+      type="Emphasized"
+      press="onSubmitExpense"
+      class="sapUiSmallMarginTop"
+    />
+  </VBox>
+</mvc:View>

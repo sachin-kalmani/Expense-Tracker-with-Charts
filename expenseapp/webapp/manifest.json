@@ -1,0 +1,116 @@
+  {
+    "_version": "1.65.0",
+    "sap.app": {
+      "id": "expenseapp",
+      "type": "application",
+      "i18n": "i18n/i18n.properties",
+      "applicationVersion": {
+        "version": "0.0.1"
+      },
+      "title": "{{appTitle}}",
+      "description": "{{appDescription}}",
+      "resources": "resources.json",
+      "sourceTemplate": {
+        "id": "@sap/generator-fiori:basic",
+        "version": "1.17.5",
+        "toolsId": "6f5ffca0-e2c6-4c6f-abd1-25f876cda196"
+      }
+    },
+    "sap.ui": {
+      "technology": "UI5",
+      "icons": {
+        "icon": "",
+        "favIcon": "",
+        "phone": "",
+        "phone@2": "",
+        "tablet": "",
+        "tablet@2": ""
+      },
+      "deviceTypes": {
+        "desktop": true,
+        "tablet": true,
+        "phone": true
+      }
+    },
+    "sap.ui5": {
+      "flexEnabled": false,
+      "dependencies": {
+        "minUI5Version": "1.136.0",
+        "libs": {
+          "sap.m": {},
+          "sap.ui.core": {},
+          "sap.viz": {},
+          "sap.ui.integration": {}
+        }
+      },
+      "contentDensities": {
+        "compact": true,
+        "cozy": true
+      },
+      "models": {
+        "i18n": {
+          "type": "sap.ui.model.resource.ResourceModel",
+          "settings": {
+            "bundleName": "expenseapp.i18n.i18n"
+          }
+        }
+      },
+      "resources": {
+        "css": [
+          {
+            "uri": "css/style.css"
+          }
+        ]
+      },
+      "routing": {
+        "config": {
+          "routerClass": "sap.m.routing.Router",
+          "controlAggregation": "pages",
+          "controlId": "app",
+          "transition": "slide",
+          "type": "View",
+          "viewType": "XML",
+          "path": "expenseapp.view",
+          "async": true
+        },
+        "routes": [
+    {
+      "pattern": "register",
+      "name": "RouteRegister",
+      "target": "TargetRegister"
+    },
+    {
+      "name": "RouteLogin",
+      "pattern": "",
+      "target": "TargetLogin"
+    },
+    {
+      "name": "RouteMain",
+      "pattern": "main",
+      "target": "TargetMain"
+    }
+    ],
+  "targets": {
+    "TargetLogin": {
+      "name": "Login",
+      "id": "Login"
+    },
+    "TargetRegister": {
+      "name": "Register",
+      "id": "Register"
+    },
+    "TargetMain":{
+      "name": "Main",
+      "id": "Main",
+      "controlAggregation": "pages"
+    }
+  }
+      },
+      "rootView": {
+        "viewName": "expenseapp.view.App",
+        "type": "XML",
+        "id": "App",
+        "async": true
+      }
+    }
+  }
