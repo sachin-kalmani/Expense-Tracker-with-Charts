@@ -17,7 +17,7 @@ This is a full-stack web application for tracking and visualizing expenses using
 
 - Frontend: SAPUI5 (XML + JavaScript)
 - Backend: Spring Boot (REST API + JPA)
-- Database: PostgreSQL
+- Database: MySQL
 
 ## Getting Started
 
