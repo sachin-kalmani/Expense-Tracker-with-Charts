@@ -1,0 +1,77 @@
+<mvc:View
+  controllerName="expenseapp.controller.Report"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  width="99%"
+  xmlns:core="sap.ui.core"
+>
+  <VBox class="sapUiSmallMargin">
+
+<Toolbar class="sapUiSmallMarginBottom">
+  <Label text="From" />
+  <DatePicker id="fromDate" valueFormat="yyyy-MM-dd" displayFormat="long" width="10rem" />
+  
+  <Label text="To" class="sapUiTinyMarginBegin" />
+  <DatePicker id="toDate" valueFormat="yyyy-MM-dd" displayFormat="long" width="10rem" />
+
+  <Button text="Apply Filter" press="onDateFilter" class="sapUiTinyMarginBegin"/>
+  <Button text="Reset Filter" press="onResetFilter" class="sapUiTinyMarginBegin"/>
+  <Button text="Export as CSV" press="onExportCSV" class="sapUiTinyMarginEnd"/>
+
+</Toolbar>
+<!-- <Toolbar >
+      <Label text="Category" labelFor="categoryInput" />
+      <Select
+        id="categoryInput1"
+        selectedKey="{form>/categoryId}"
+        change=".onCategoryChange"
+        items="{categories>/}"
+      >
+        <core:Item key="{categories>id}" text="{categories>name}" />
+      </Select>
+</Toolbar> -->
+
+    <!-- Summary Row -->
+    <HBox justifyContent="SpaceAround" alignItems="Center" class="summaryBox">
+      <ObjectStatus class="SapMMedium" title="Total Expenses" text="₹{reportModel>/totalAmount}" />
+      <ObjectStatus class="SapMMedium" title="Top Category" text="{reportModel>/topCategory}" />
+      <ObjectStatus class="SapMMedium" title="Top Month" text="{reportModel>/topMonth}" />
+      <ObjectStatus class="SapMMedium" title="Most Frequent Category" text="{reportModel>/mostFrequentCategory}" />
+    </HBox>
+
+
+
+    <!-- Expense Table -->
+<Table
+  headerText="All Expenses"
+  items="{reportModel>/filteredExpenses}"
+  class="sapUiSmallMarginTop"
+  id="reportTable"
+  visible="false"
+>
+  <columns>
+    <Column><Text text="Description" /></Column>
+    <Column><Text text="Amount" /></Column>
+    <Column><Text text="Category" /></Column>
+    <Column><Text text="Date" /></Column>
+  </columns>
+  <items>
+    <ColumnListItem>
+      <cells>
+        <Text text="{reportModel>expenseDescription}" />
+        <Text text="{reportModel>amount}" />
+        <Text text="{reportModel>categoryName}" />
+        <Text
+          text="{
+            path: 'reportModel>expenseRecordTime',
+            formatter: '.formatDate'
+          }"
+        />
+      </cells>
+    </ColumnListItem>
+  </items>
+</Table>
+
+
+  </VBox>
+</mvc:View>

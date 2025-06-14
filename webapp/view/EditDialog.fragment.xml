@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog
+    id="editDialog"
+    title="Edit Expense"
+    draggable="true"
+    resizable="true"
+    contentWidth="400px"
+    contentHeight="auto"
+    class="sapUiResponsivePadding">
+    
+    <VBox>
+      <Input id="editDescription" placeholder="Description" value="{edit>/expenseDescription}" />
+      <Input id="editAmount" placeholder="Amount" type="Number" value="{edit>/amount}" />
+      <DatePicker id="editDate" value="{edit>/expenseRecordTime}" displayFormat="yyyy-MM-dd" />
+<ComboBox
+  selectedKey="{edit>/categoryId}"
+  items="{
+    path: 'categories>/categories'
+  }">
+  <core:Item key="{categories>id}" text="{categories>name}" />
+</ComboBox>
+
+    </VBox>
+
+    <beginButton>
+      <Button text="Save" press="onEditSave" />
+    </beginButton>
+    <endButton>
+      <Button text="Cancel" press="onEditCancel" />
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>
