@@ -1,9 +1,0 @@
-<mvc:View
-  controllerName="expenseapp.controller.Dashboard"
-  xmlns:mvc="sap.ui.core.mvc"
-  xmlns="sap.m"
->
-      <VBox id="categoryContent" class="sapUiSmallMargin">
-        <!-- Content will be added from controller -->
-      </VBox>
-</mvc:View>
